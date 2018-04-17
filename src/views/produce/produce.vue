@@ -131,10 +131,12 @@
  </div>   
 </template>
 <script>
+import axios from 'axios';
     export default {
         data () {
             return {
                 formValidate: {
+                    produceIndex:'',
                     produceCategory:'',
                     produceEarth:'',
                     produceSeed:'',
@@ -336,21 +338,54 @@
                 ],
                 data1: [
                     
-                ]
+                ],
+                index:1
             }
         },
         methods: {
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        let thisCoopType="土地确权证";
-                        if(this.formValidate.coopType=="1"){
-                            thisCoopType="土地承包合同";
-                        }else if(this.formValidate.coopType=="2"){
-                            thisCoopType="村里台账信息";
-                        }
-                        this.data1.push({
+                        this.addProduce();
+                    } else {
+                        this.$Message.error('Fail!');
+                    }
+                })
+            },
+            handleReset (name) {
+                this.$refs[name].resetFields();
+            },
+            addProduce(){
+                let params = new URLSearchParams();
+                params.append("produfactors_dept_id", sessionStorage.getItem("dept_id"));
+                params.append("produfactors_cate", this.formValidate.produceCategory);
+                params.append("produfactors_soil_cate", this.formValidate.produceEarth);
+                params.append("produfactors_seed_price", this.formValidate.produceSeed);
+                params.append("produfactors_chem_price", this.formValidate.produceFertilizer);
+                params.append("produfactors_pesticide_price", this.formValidate.producePesticides);
+                params.append("produfactors_sowing_price", this.formValidate.produceSow);
+                params.append("produfactors_rotary_price", this.formValidate.produceCultivation);
+                params.append("produfactors_spraying_price", this.formValidate.produceSpray);
+                params.append("produfactors_harvest_price", this.formValidate.produceHarvest);
+                params.append("produfactors_autusoil_price", this.formValidate.producePrepare);
+                params.append("produfactors_manmade_price", this.formValidate.producePerson);
+                params.append("produfactors_insurance_price", this.formValidate.produceInsurance);
+                params.append("produfactors_accrual_price", this.formValidate.produceInterest);
+                params.append("produfactors_plantcost_sum", this.formValidate.produceCost);
+                params.append("produfactors_yield_num", this.formValidate.produceExpect);
+                params.append("produfactors_dew", this.formValidate.produceEstimate);
+                params.append("produfactors_plant_allowance", this.formValidate.producePlantSubsidy);
+                params.append("produfactors_grov_allowance", this.formValidate.producePolicySubsidy);
+                params.append("produfactors_pearning", this.formValidate.produceProfit);
+                params.append("produfactors_other_price", this.formValidate.produceOther);
+                params.append("produfactors_remark", this.formValidate.produceRemarks);
 
+                axios
+                    .post(global.API_PATH+"produfactors/produfactors_msg_insert",params)
+                    .then(response => {
+
+                        this.data1.push({
+                            produceIndex:++this.index,
                             produceCategory:this.formValidate.produceCategory,
                             produceEarth:this.formValidate.produceEarth,
                             produceSeed:this.formValidate.produceSeed,
@@ -373,14 +408,54 @@
                             produceOther:this.formValidate.produceOther,
                             produceRemarks:this.formValidate.produceRemarks
                         });
-                    } else {
-                        this.$Message.error('Fail!');
-                    }
-                })
+                    })
+                    .catch(error => {
+                        
+                        this.$Message.error(error);
+                    });
+                
             },
-            handleReset (name) {
-                this.$refs[name].resetFields();
+            getProduce(){
+                let params = new URLSearchParams();
+                params.append("produfactors_dept_id", sessionStorage.getItem("dept_id"));
+                axios
+                    .post(global.API_PATH+"produfactors/produfactors_msg_sel", params)
+                    .then(response => {
+                        for(let i=0;i<response.data.length;i++){
+                            this.index=i+1;
+                            this.data1.push({
+                                produceIndex:i+1,
+                                produceCategory:response.data[i].w_produfactors_cate,
+                                produceEarth:response.data[i].w_produfactors_soil_cate,
+                                produceSeed:response.data[i].w_produfactors_seed_price,
+                                produceFertilizer:response.data[i].w_produfactors_chem_price,
+                                producePesticides:response.data[i].w_produfactors_pesticide_price,
+                                produceSow:response.data[i].w_produfactors_sowing_price,
+                                produceCultivation:response.data[i].w_produfactors_rotary_price,
+                                produceSpray:response.data[i].w_produfactors_spraying_price,
+                                produceHarvest:response.data[i].w_produfactors_harvest_price,
+                                producePrepare:response.data[i].w_produfactors_autusoil_price,
+                                producePerson:response.data[i].w_produfactors_manmade_price,
+                                produceInsurance:response.data[i].w_produfactors_insurance_price,
+                                produceInterest:response.data[i].w_produfactors_accrual_price,
+                                produceCost:response.data[i].w_produfactors_plantcost_sum,
+                                produceExpect:response.data[i].w_produfactors_yield_num,
+                                produceEstimate:response.data[i].w_produfactors_dew,
+                                producePlantSubsidy:response.data[i].w_produfactors_plant_allowance,
+                                producePolicySubsidy:response.data[i].w_produfactors_grov_allowance,
+                                produceProfit:response.data[i].w_produfactors_pearning,
+                                produceOther:response.data[i].w_produfactors_other_price,
+                                produceRemarks:response.data[i].w_produfactors_remark
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        this.$Message.error('错误'+error);
+                    });
             }
+        },
+        created(){
+            this.getProduce();
         }
     }
 </script>

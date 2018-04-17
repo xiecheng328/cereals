@@ -51,9 +51,9 @@
             <Col span="8">
                 <FormItem label="合作方式" prop="coopType">
                     <Select v-model="formValidate.coopType" placeholder="必须三选一">
-                        <Option value="0">土地确权证</Option>
-                        <Option value="1">土地承包合同</Option>
-                        <Option value="2">村里台账信息</Option>
+                        <Option value="土地确权证">土地确权证</Option>
+                        <Option value="土地承包合同">土地承包合同</Option>
+                        <Option value="村里台账信息">村里台账信息</Option>
                     </Select>
                 </FormItem>
             </Col>
@@ -67,6 +67,7 @@
  </div>   
 </template>
 <script>
+    import axios from 'axios';
     export default {
         data () {
             return {
@@ -154,30 +155,78 @@
                 ],
                 data1: [
                     
-                ]
+                ],
+                thisIndex:1
             }
+        },
+        created(){
+//            coopName: '',
+//                coopArea: '',
+//                coopTel: '',
+//                coopId: '',
+//                coopAddress: '',
+//                coopOwnre: '',
+//                coopOTel: '',
+//                coopOAddress: '',
+//                coopType:''
+            let params = new URLSearchParams();
+            params.append("dept_id", sessionStorage.getItem("dept_id"));
+            axios
+                .post(global.API_PATH+"coop/coop_msg_sel",params)
+                .then(response => {
+                    for(var i=0;i<response.data.length;i++){
+                        this.thisIndex = i+1;
+                        var o = new Object();
+                        o.coopIndex = i+1;
+                        o.coopName = response.data[i].w_coop_grantor;
+                        o.coopArea = response.data[i].w_coop_soil_area;
+                        o.coopTel = response.data[i].w_coop_tel_num;
+                        o.coopId = response.data[i].w_coop_ID_num;
+                        o.coopAddress = response.data[i].w_coop_address;
+                        o.coopOwnre = response.data[i].w_coop_soil_owner;
+                        o.coopOTel = response.data[i].w_coop_soil_tel_num;
+                        o.coopOAddress = response.data[i].w_coop_soil_address;
+                        o.coopType = response.data[i].w_coop_soil_name;
+                        this.data1.push(o);
+                    }
+                }).catch(error => {
+                    this.$Message.error(error);
+                });
         },
         methods: {
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        let thisCoopType="土地确权证";
-                        if(this.formValidate.coopType=="1"){
-                            thisCoopType="土地承包合同";
-                        }else if(this.formValidate.coopType=="2"){
-                            thisCoopType="村里台账信息";
-                        }
-                        this.data1.push({
-                            coopName: this.formValidate.coopName,
-                            coopArea: this.formValidate.coopArea,
-                            coopTel: this.formValidate.coopTel,
-                            coopId: this.formValidate.coopId,
-                            coopAddress: this.formValidate.coopAddress,
-                            coopOTel: this.formValidate.coopOTel,
-                            coopOwnre: this.formValidate.coopOwnre,
-                            coopOAddress: this.formValidate.coopOAddress,
-                            coopType:thisCoopType
-                        });
+                        let params = new URLSearchParams();
+                        params.append("grantor", this.formValidate.coopName);
+                        params.append("area", this.formValidate.coopArea);
+                        params.append("id_num", this.formValidate.coopId);
+                        params.append("tel_num", this.formValidate.coopTel);
+                        params.append("address", this.formValidate.coopAddress);
+                        params.append("owner", this.formValidate.coopOTel);
+                        params.append("soil_tel_num", this.formValidate.coopOwnre);
+                        params.append("soil_address", this.formValidate.coopOAddress);
+                        params.append("soil_name", this.formValidate.coopType);
+                        params.append("dept_id", sessionStorage.getItem("dept_id"));
+                        axios
+                            .post(global.API_PATH+"coop/coop_msg_insert",params)
+                            .then(response => {
+                                this.data1.push({
+                                    coopIndex:++this.thisIndex,
+                                    coopName: this.formValidate.coopName,
+                                    coopArea: this.formValidate.coopArea,
+                                    coopTel: this.formValidate.coopTel,
+                                    coopId: this.formValidate.coopId,
+                                    coopAddress: this.formValidate.coopAddress,
+                                    coopOTel: this.formValidate.coopOTel,
+                                    coopOwnre: this.formValidate.coopOwnre,
+                                    coopOAddress: this.formValidate.coopOAddress,
+                                    coopType:this.formValidate.coopType
+                                });
+                            })
+                            .catch(error => {
+                                this.$Message.error(error);
+                            });
                     } else {
                         this.$Message.error('Fail!');
                     }

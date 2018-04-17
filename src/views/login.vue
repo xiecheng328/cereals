@@ -138,16 +138,12 @@ export default {
     },
     methods: {
         areaSubmit () {
-            console.log(this.showRes);
 
-            // axios.post(global.API_PATH+"user/index",,function(){
-              //  country=xxx &town=xxx&province=xxx
-            // });
-
-            let params = new URLSearchParams();
-            params.append("country", this.showRes[0]);
-            params.append("town", this.showRes[1]);
-            params.append("province", this.showRes[2]);
+           let params = new URLSearchParams();
+            params.append("province", this.showRes[0]);
+            params.append("city", this.showRes[1]);
+            params.append("country", this.showRes[2]);
+            params.append("town", this.showRes[3]);
             params.append("village", this.village);
 
             console.log(params);
@@ -155,7 +151,7 @@ export default {
             axios
                 .post(global.API_PATH+"user/index", params)
                 .then(response => {
-
+                    sessionStorage.setItem("dept_id", response.data.w_dept_id);
                     if(response.data.isReg){
                         //去注册
                         this.isCheck = false;
@@ -165,55 +161,68 @@ export default {
                         this.isCheck = false;
                         this.whichName = 'name1';
                     }
-                    // this.$Message.success("注册成功");
-                    console.log(response);
                 })
                 .catch(error => {
-                    
                     this.$Message.error(error);
                 });
 
             this.isShow = true;
+
             
 
         },
-        handleSubmit () {
+        handleSubmit () {   
             this.$refs.loginForm.validate((valid) => {
                 if (valid) {
-                    
                     Cookies.set('user', this.form.userName);
                     Cookies.set('password', this.form.password);
-                    this.$store.commit('setAvator', 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg');
-                    if (this.form.userName === 'iview_admin') {
-                        Cookies.set('access', 0);
-                    } else {
-                        Cookies.set('access', 1);
-                    }
-                    this.$router.push({
-                        name: 'home_index'
-                    });
+
+                    let params = new URLSearchParams();
+                    params.append("name", this.form.userName);
+                    params.append("pass", this.form.password);
+                    params.append("dept_id", sessionStorage.getItem("dept_id"));
+
+                    axios
+                        .post(global.API_PATH+"user/login", params)
+                        .then(response => {
+
+                            if(response.data == "success"){
+                                //登录成功存入sessionStorage
+                                this.$router.push({
+                                    name: 'home_index'
+                                });
+                            }else{
+                                this.$Message.error(response);
+                            }
+                        });
                 }
             });
         },
         handleReg () {
-            console.log(this.regForm);
-            axios
-                .post(global.API_PATH+"user/index", params)
-                .then(response => {
+            this.$refs.registerForm.validate((valid) => {
+                if (valid) {
+                    Cookies.set('user', this.regForm.regName);
+                    Cookies.set('password', this.regForm.regPassword);
 
-                    if(response.data.isReg){
-                        //注册成功存入sessionStorage
-                        sessionStorage.setItem("user", "value");
-                    }else{
-                        this.$Message.error(response);
-                    }
-                })
-                .catch(error => {
-                    this.$Message.error(error);
-                });
-            this.$router.push({
-                name: 'home_index'
+                    let params = new URLSearchParams();
+                    params.append("name", this.regForm.regName);
+                    params.append("pass", this.regForm.regPassword);
+                    params.append("dept_id", sessionStorage.getItem("dept_id"));
+                    axios
+                        .post(global.API_PATH+"user/reg", params)
+                        .then(response => {
+                            if(response.data == "success"){
+                                //注册成功挑到首页
+                                this.$router.push({
+                                    name: 'home_index'
+                                });
+                            }else{
+                                this.$Message.error(response);
+                            }
+                        });
+                }
             });
+            
         },
         renderFormat (label) {
             return label.join(' => ');
