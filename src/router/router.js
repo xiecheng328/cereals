@@ -67,6 +67,16 @@ export const otherRouter = {
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
     {
+        path: '/test',
+        icon: 'earth',
+        name: 'test',
+        title: '测试页面',
+        component: Main,
+        children: [
+            { path: 'index', title: '测试页面', name: 'testpage', component: () => import('@/views/test/test.vue') }
+        ]
+    },
+    /*{
         path: '/access',
         icon: 'key',
         name: 'access',
@@ -76,7 +86,7 @@ export const appRouter = [
             { path: 'index', title: '权限管理', name: 'access_index', component: () => import('@/views/access/access.vue') }
         ]
     },
-    /* {
+    {
         path: '/access-test',
         icon: 'lock-combination',
         title: '权限测试页',
