@@ -127,7 +127,7 @@
             <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">取消</Button>
         </FormItem>
     </Form>
-<Table border :columns="columns1" :data="data1"></Table>
+<Table width="1090" border :columns="columns1" :data="data1"></Table>
  </div>   
 </template>
 <script>
@@ -225,90 +225,113 @@
                 columns1: [
                     {
                         title:"序号",
-                        key:"produceIndex"
+                        key:"produceIndex",
+                        width: 100,
+                        fixed: 'left'
                     },
                     {
                         title: '品类',
-                        key: 'produceCategory'
+                        key: 'produceCategory',
+                        width: 100,
                     },
                     {
                         title: '土地（托管、流转）',
-                        key: 'produceEarth'
+                        key: 'produceEarth',
+                        width: 150,
                     },
                     {
                         title: '种子',
-                        key: 'produceSeed'
+                        key: 'produceSeed',
+                        width: 100,
                     },
                     {
                         title: '化肥',
-                        key: 'produceFertilizer'
+                        key: 'produceFertilizer',
+                        width: 100,
                     },
                     {
                         title: '农药',
-                        key: 'producePesticides'
+                        key: 'producePesticides',
+                        width: 100,
                     },
                     {
                         title: '播种',
-                        key: 'produceSow'
+                        key: 'produceSow',
+                        width: 100,
                     },
                     {
                         title: '旋耕',
-                        key: 'produceCultivation'
+                        key: 'produceCultivation',
+                        width: 100,
                     },
                     {
                         title: '喷施',
-                        key: 'produceSpray'
+                        key: 'produceSpray',
+                        width: 100,
                     },
                     {
                         title: '收割（直收、脱粒）',
-                        key: 'produceHarvest'
+                        key: 'produceHarvest',
+                        width: 150,
                     },
                     {
                         title: '秋整地',
-                        key: 'producePrepare'
+                        key: 'producePrepare',
+                        width: 100,
                     },
                     {
                         title: '人工',
-                        key: 'producePerson'
+                        key: 'producePerson',
+                        width: 100,
                     },
                     {
                         title: '保险',
-                        key: 'produceInsurance'
+                        key: 'produceInsurance',
+                        width: 100,
                     },
                     {
                         title: '利息',
-                        key: 'produceInterest'
+                        key: 'produceInterest',
+                        width: 100,
                     },
                     {
                         title: '种植成本合计',
-                        key: 'produceCost'
+                        key: 'produceCost',
+                        width: 150,
                     },
                     {
                         title: '预计产出（亩/斤）',
-                        key: 'produceExpect'
+                        key: 'produceExpect',
+                        width: 150,
                     },
                     {
                         title: '预计（等级/水分）',
-                        key: 'produceEstimate'
+                        key: 'produceEstimate',
+                        width: 150,
                     },
                     {
                         title: '种植补贴（粮补、地补）',
-                        key: 'producePlantSubsidy'
+                        key: 'producePlantSubsidy',
+                        width: 150,
                     },
                     {
                         title: '政策补贴（生产、调茬）',
-                        key: 'producePolicySubsidy'
+                        key: 'producePolicySubsidy',
+                        width: 150,
                     },
                     {
                         title: '预期收益',
-                        key: 'produceProfit'
+                        key: 'produceProfit',
+                        width: 100,
                     },
                     {
                         title: '其他费用',
-                        key: 'produceOther'
+                        key: 'produceOther',
+                        width: 100,
                     },{
                         title:'备注',
-                        key:'produceRemarks'
+                        key:'produceRemarks',
+                        width: 100,
                     }
                 ],
                 data1: [
@@ -327,12 +350,28 @@
                             thisCoopType="村里台账信息";
                         }
                         this.data1.push({
-                            retailOwner: this.formValidate.retailOwner,
-                            retailArea: this.formValidate.retailArea,
-                            retailId: this.formValidate.retailId,
-                            retailTel: this.formValidate.retailTel,
-                            retailAddress: this.formValidate.retailAddress,
-                            retailType: thisCoopType
+
+                            produceCategory:this.formValidate.produceCategory,
+                            produceEarth:this.formValidate.produceEarth,
+                            produceSeed:this.formValidate.produceSeed,
+                            produceFertilizer:this.formValidate.produceFertilizer,
+                            producePesticides:this.formValidate.producePesticides,
+                            produceSow:this.formValidate.produceSow,
+                            produceCultivation:this.formValidate.produceCultivation,
+                            produceSpray:this.formValidate.produceSpray,
+                            produceHarvest:this.formValidate.produceHarvest,
+                            producePrepare:this.formValidate.producePrepare,
+                            producePerson:this.formValidate.producePerson,
+                            produceInsurance:this.formValidate.produceInsurance,
+                            produceInterest:this.formValidate.produceInterest,
+                            produceCost:this.formValidate.produceCost,
+                            produceExpect:this.formValidate.produceExpect,
+                            produceEstimate:this.formValidate.produceEstimate,
+                            producePlantSubsidy:this.formValidate.producePlantSubsidy,
+                            producePolicySubsidy:this.formValidate.producePolicySubsidy,
+                            produceProfit:this.formValidate.produceProfit,
+                            produceOther:this.formValidate.produceOther,
+                            produceRemarks:this.formValidate.produceRemarks
                         });
                     } else {
                         this.$Message.error('Fail!');

@@ -123,6 +123,20 @@ export const appRouter = [
                 component: () => import('@/views/produce/produce.vue')
             }
         ]
+    },{
+        path: '/cars',
+        icon: 'earth',
+        name: 'cars',
+        title: '农机和经营车辆',
+        component: Main,
+        children: [
+            {
+                path: 'cars',
+                title: '农机和经营车辆',
+                name: 'carspage',
+                component: () => import('@/views/cars/cars.vue')
+            }
+        ]
     }
     
     /*{
