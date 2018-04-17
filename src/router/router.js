@@ -67,20 +67,64 @@ export const otherRouter = {
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
     {
+        path: '/baseinfo',
+        icon: 'earth',
+        name: 'baseinfo',
+        title: '基本信息',
+        component: Main,
+        children: [
+            {
+                path: 'baseinfo',
+                title: '基本信息',
+                name: 'basepage',
+                component: () => import('@/views/baseinfo/baseinfo.vue')
+            }
+        ]
+    },
+    {
         path: '/test',
         icon: 'earth',
         name: 'test',
-        title: '测试页面',
+        title: '合作社信息',
         component: Main,
         children: [
             {
                 path: 'index',
-                title: '测试页面',
+                title: '合作社信息',
                 name: 'testpage',
                 component: () => import('@/views/test/test.vue')
             }
         ]
-    },
+    },{
+        path: '/retail',
+        icon: 'earth',
+        name: 'retail',
+        title: '散户信息',
+        component: Main,
+        children: [
+            {
+                path: 'retail',
+                title: '散户信息',
+                name: 'retailpage',
+                component: () => import('@/views/retail/retail.vue')
+            }
+        ]
+    },{
+        path: '/produce',
+        icon: 'earth',
+        name: 'produce',
+        title: '生产要素',
+        component: Main,
+        children: [
+            {
+                path: 'produce',
+                title: '生产要素',
+                name: 'producepage',
+                component: () => import('@/views/produce/produce.vue')
+            }
+        ]
+    }
+    
     /*{
         path: '/access',
         icon: 'key',
