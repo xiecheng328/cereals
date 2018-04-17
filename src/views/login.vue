@@ -192,7 +192,7 @@ export default {
                                     name: 'home_index'
                                 });
                             }else{
-                                this.$Message.error(response);
+                                this.$Message.error("错误！");
                             }
                         });
                 }

@@ -51,13 +51,17 @@
             axios
                 .post(global.API_PATH+"coop/get_coop_all_msg", params)
                 .then(response => {
-                    this.formValidate.baseDirector = response.data.w_coop_directors_num;
-                    this.formValidate.baseCrux = response.data.w_coop_keyjob_num;
-                    this.formValidate.baseHire = response.data.w_coop_pyear_employ_num;
-                    this.formValidate.baseMembers = response.data.w_coop_member_num;
-                    this.formValidate.baseNature = response.data.w_coop_soil_property;
+                    if(response.data){
+                        this.formValidate.baseDirector = response.data.w_coop_directors_num;
+                        this.formValidate.baseCrux = response.data.w_coop_keyjob_num;
+                        this.formValidate.baseHire = response.data.w_coop_pyear_employ_num;
+                        this.formValidate.baseMembers = response.data.w_coop_member_num;
+                        this.formValidate.baseNature = response.data.w_coop_soil_property;
+                    }
+                    
                 })
                 .catch(error => {
+                    console.log(error);
                     this.$Message.error(error);
                 });
         },
