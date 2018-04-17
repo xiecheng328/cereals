@@ -34,7 +34,8 @@
         data () {
             return {
                 formValidate: {
-                    name: '',
+                    baseDirector: '',
+
                     
                 },
                 ruleValidate: {
@@ -54,6 +55,7 @@
             }
         },
         methods: {
+            //提交按钮
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
@@ -63,9 +65,11 @@
                     }
                 })
             },
+            //取消操作
             handleReset (name) {
                 this.$refs[name].resetFields();
             }
+           
         }
     }
 </script>

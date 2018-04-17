@@ -66,6 +66,7 @@
  </div>   
 </template>
 <script>
+    import axios from 'axios';
     export default {
         data () {
             return {
@@ -156,10 +157,49 @@
                 ]
             }
         },
+        
         methods: {
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
+                        this.carsAdd();
+                    } else {
+                        this.$Message.error('Fail!');
+                    }
+                })
+            },
+            handleReset (name) {
+                this.$refs[name].resetFields();
+            },
+            //信息提交
+            carsAdd(){
+                console.log(this.formValidate);
+                let thisObj = {
+                    machine_name:this.formValidate.carsName,
+                    machine_brand:this.formValidate.carsType,
+                    machine_sell_price:this.formValidate.carsPrice,
+                    machine_num:this.formValidate.carsNum,
+                    machine_buy_price:this.formValidate.carsSum,
+                    machine_buy_time:this.formValidate.carsTimer,
+                    machine_allowance:this.formValidate.carsSubsidy,
+                    machine_owner:this.formValidate.carsAscription,
+                    dept_id:'20'
+                }
+                // let params = new URLSearchParams();
+                // params.append("machine_name", this.formValidate.carsName);
+                // params.append("machine_brand", this.formValidate.carsType);
+                // params.append("machine_sell_price", formValidate.carsPrice);
+                // params.append("machine_num", this.formValidate.carsNum);
+                // params.append("machine_buy_price", this.formValidate.carsSum);
+                // params.append("machine_buy_time", this.formValidate.carsTimer);
+                // params.append("machine_allowance", this.formValidate.carsSubsidy);
+                // params.append("machine_owner", this.formValidate.carsAscription);
+                // params.append("dept_id", '20');
+
+                axios
+                    .get(global.API_PATH+"machine/machine_msg_insert",{"thisObj":"123"})
+                    .then(response => {
+
                         let thisCarsType="合作社";
                         if(this.formValidate.carsAscription=="1"){
                             thisCarsType="个人";
@@ -175,14 +215,48 @@
                             carsSubsidy: this.formValidate.carsSubsidy,
                             carsAscription: thisCarsType
                         });
-                    } else {
-                        this.$Message.error('Fail!');
-                    }
-                })
+                    })
+                    .catch(error => {
+                        
+                        this.$Message.error(error);
+                    });
+                    
             },
-            handleReset (name) {
-                this.$refs[name].resetFields();
+            carsGet(){
+                let params = new URLSearchParams();
+                //params.append("dept_id", sessionStorage.getItem("dept_id"));
+                params.append("dept_id", '20');
+
+               // var that = this;
+                axios
+                    .post(global.API_PATH+"machine/machine_msg_sel", params)
+                    .then(response => {
+                        for(val in response){
+                            console.log(val);
+                        }
+                        let thisCarsType="合作社";
+                        if(this.formValidate.carsAscription=="1"){
+                            thisCarsType="个人";
+                        }
+                        this.data1.push({
+                            carsName: this.formValidate.carsName,
+                            carsUnit: this.formValidate.carsUnit,
+                            carsType: this.formValidate.carsType,
+                            carsPrice: this.formValidate.carsPrice,
+                            carsNum: this.formValidate.carsNum,
+                            carsSum: this.formValidate.carsSum,
+                            carsTimer: this.formValidate.carsTimer,
+                            carsSubsidy: this.formValidate.carsSubsidy,
+                            carsAscription: thisCarsType
+                        });
+                    })
+                    .catch(error => {
+                        this.$Message.error('错误'+error);
+                    });
             }
+        },
+        created(){
+            this.carsGet();
         }
     }
 </script>

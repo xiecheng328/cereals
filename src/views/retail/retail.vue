@@ -120,11 +120,11 @@
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        let thisCoopType="土地确权证";
-                        if(this.formValidate.coopType=="1"){
-                            thisCoopType="土地承包合同";
-                        }else if(this.formValidate.coopType=="2"){
-                            thisCoopType="村里台账信息";
+                        let thisRetailType="土地确权证";
+                        if(this.formValidate.retailType=="1"){
+                            thisRetailType="土地承包合同";
+                        }else if(this.formValidate.retailType=="2"){
+                            thisRetailType="村里台账信息";
                         }
                         this.data1.push({
                             retailOwner: this.formValidate.retailOwner,
@@ -132,7 +132,7 @@
                             retailId: this.formValidate.retailId,
                             retailTel: this.formValidate.retailTel,
                             retailAddress: this.formValidate.retailAddress,
-                            retailType: thisCoopType
+                            retailType: thisRetailType
                         });
                     } else {
                         this.$Message.error('Fail!');
@@ -141,7 +141,14 @@
             },
             handleReset (name) {
                 this.$refs[name].resetFields();
+            },
+            //获取列表
+            retailGet(){
+
             }
+        },
+        created(){
+
         }
     }
 </script>
