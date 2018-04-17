@@ -1,16 +1,16 @@
 <template>
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="180">
         <FormItem label="合作社理事会人数" prop="baseDirector">
-            <Input type="number" v-model="formValidate.baseDirector" placeholder="请输入人数"></Input>
+            <Input v-model="formValidate.baseDirector" placeholder="请输入人数"></Input>
         </FormItem>
         <FormItem label="关键岗位人员" prop="baseCrux">
-            <Input type="number" v-model="formValidate.baseCrux" placeholder="请输入人数"></Input>
+            <Input v-model="formValidate.baseCrux" placeholder="请输入人数"></Input>
         </FormItem>
         <FormItem label="上一年雇佣人数" prop="baseHire">
-            <Input type="number" v-model="formValidate.baseHire" placeholder="请输入人数"></Input>
+            <Input v-model="formValidate.baseHire" placeholder="请输入人数"></Input>
         </FormItem>
         <FormItem label="合作社社员人数" prop="baseMembers">
-            <Input type="number" v-model="formValidate.baseMembers" placeholder="请输入人数"></Input>
+            <Input v-model="formValidate.baseMembers" placeholder="请输入人数"></Input>
         </FormItem>
         <FormItem label="土地性质">
             <Row>
