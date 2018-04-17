@@ -53,7 +53,7 @@ export const locking = {
 export const otherRouter = {
     path: '/',
     name: 'otherRouter',
-    redirect: '/home',
+    redirect: '/login',
     component: Main,
     children: [
         { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/home/home.vue') },
@@ -76,7 +76,7 @@ export const appRouter = [
             { path: 'index', title: '权限管理', name: 'access_index', component: () => import('@/views/access/access.vue') }
         ]
     },
-    {
+    /* {
         path: '/access-test',
         icon: 'lock-combination',
         title: '权限测试页',
@@ -221,7 +221,7 @@ export const appRouter = [
         children: [
             { path: 'index', title: '错误页面', name: 'errorpage_index', component: () => import('@/views/error-page/error-page.vue') }
         ]
-    }
+    } */
 ];
 
 // 所有上面定义的路由都要写在下面的routers里
