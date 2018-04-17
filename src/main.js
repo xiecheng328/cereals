@@ -12,6 +12,8 @@ import util from './libs/util';
 Vue.use(VueI18n);
 Vue.use(iView);
 
+global.API_PATH = 'http://192.168.31.206/wuyangzl/'
+
 new Vue({
     el: '#app',
     router: router,
