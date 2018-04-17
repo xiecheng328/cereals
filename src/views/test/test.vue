@@ -58,6 +58,13 @@
                 </FormItem>
             </Col>
         </Row>
+        <Row>
+            <Col span="8">
+                <Upload :action="actionUrl" name="file">
+                    <Button type="ghost" icon="ios-cloud-upload-outline">Upload files</Button>
+                </Upload>
+            </Col>
+        </Row>
         <FormItem>
             <Button type="primary" @click="handleSubmit('formValidate')">添加</Button>
             <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">取消</Button>
@@ -156,6 +163,7 @@
                 data1: [
                     
                 ],
+                actionUrl:global.API_PATH+"coop/img_upload",
                 thisIndex:1
             }
         },

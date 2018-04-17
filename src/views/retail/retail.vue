@@ -43,7 +43,7 @@
         </Row>
         <Row>
             <Col span="8">
-                 <Upload action="//jsonplaceholder.typicode.com/posts/">
+                 <Upload :action="actionUrl" name="file">
                     <Button type="ghost" icon="ios-cloud-upload-outline">Upload files</Button>
                 </Upload>
             </Col>
@@ -70,6 +70,7 @@
                     retailType: '',
                     thisRetailContract:''
                 },
+                actionUrl:global.API_PATH+"privatemsg/img_upload",
                 ruleValidate: {
                     retailOwner: [
                         { required: true, message: '此项不能为空', trigger: 'blur' }
