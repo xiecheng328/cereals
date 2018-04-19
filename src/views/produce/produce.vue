@@ -385,7 +385,7 @@ import axios from 'axios';
                     .then(response => {
 
                         this.data1.push({
-                            produceIndex:++this.index,
+                            produceIndex:this.index++,
                             produceCategory:this.formValidate.produceCategory,
                             produceEarth:this.formValidate.produceEarth,
                             produceSeed:this.formValidate.produceSeed,

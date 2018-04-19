@@ -142,7 +142,7 @@
                         params.append("private_soil_name", this.formValidate.retailType);
                         // params.append("private_soil_contract", this.formValidate.thisRetailContract);
 
-                        params.append("dept_id", sessionStorage.getItem("dept_id"));
+                        params.append("private_dept_id", sessionStorage.getItem("dept_id"));
 
                    // private_dept_id、private_owner、private_soil_area、private_ID_num、private_tel_num、private_address、private_soil_name、private_soil_contract（文件）
                         axios
@@ -150,7 +150,7 @@
                             .then(response => {
                                 if(response.data == "success"){
                                     this.data1.push({
-                                    retailIndex:++this.thisIndex,
+                                    retailIndex:this.thisIndex++,
                                     retailOwner:this.formValidate.retailOwner,
                                     retailArea: this.formValidate.retailArea,
                                     retailId: this.formValidate.retailId,
@@ -177,7 +177,7 @@
             //获取列表
             retailGet(){
                 let params = new URLSearchParams();
-                params.append("dept_id", sessionStorage.getItem("dept_id"));
+                params.append("private_dept_id", sessionStorage.getItem("dept_id"));
                 axios
                     .post(global.API_PATH+"privatemsg/private_msg_sel", params)
                     .then(response => {
