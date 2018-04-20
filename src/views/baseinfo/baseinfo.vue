@@ -21,6 +21,9 @@
         <FormItem label="土地性质">
             <Input v-model="formValidate.baseNature" placeholder=""></Input>
         </FormItem>
+        <FormItem label="土地总面积">
+            <span v-text="total"></span>
+        </FormItem>
         <FormItem>
             <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
             <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">取消</Button>
@@ -35,6 +38,7 @@
                 formValidate: {
                     baseDirector: ''
                 },
+                total:0,
                 ruleValidate: {
                     baseName: [
                         { required: true, message: '此项不能为空', trigger: 'blur' }
@@ -71,6 +75,7 @@
                         this.formValidate.baseHire = response.data.w_coop_pyear_employ_num;
                         this.formValidate.baseMembers = response.data.w_coop_member_num;
                         this.formValidate.baseNature = response.data.w_coop_soil_property;
+                        this.total = response.data.total;
                     }
                     
                 })
