@@ -99,10 +99,11 @@
                         { required: true, message: '此项不能为空', trigger: 'blur' }
                     ],
                     coopTel: [
-                        { required: true, message: '此项不能为空', trigger: 'blur' }
+                        { required: true,pattern: /^1[34578]\d{9}$/, message: '不能为空或格式错误', trigger: 'blur' }
                     ],
                     coopId: [
-                        { required: true, message: '此项不能为空', trigger: 'blur' }
+                        { required: true, message: '此项不能为空', trigger: 'blur' },
+                        { type: 'string', min: 18,max:18,message: '身份证号应为18位', trigger: 'blur'}
                     ],
                     coopOAddress: [
                         { required: true, message: '此项不能为空', trigger: 'blur' }
@@ -111,7 +112,7 @@
                         { required: true, message: '此项不能为空', trigger: 'blur' }
                     ],
                     coopOTel: [
-                        { required: true, message: '此项不能为空', trigger: 'blur' }
+                        { required: true,pattern: /^1[34578]\d{9}$/, message: '不能为空或格式错误', trigger: 'blur' }
                     ],
                     coopAddress: [
                         { required: true, message: '此项不能为空', trigger: 'blur' }
