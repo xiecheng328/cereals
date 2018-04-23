@@ -12,7 +12,7 @@ import util from './libs/util';
 Vue.use(VueI18n);
 Vue.use(iView);
 
-global.API_PATH = 'http://127.0.0.1/wuyangzl/'
+global.API_PATH = 'http://39.107.253.90/wuyangzl/'
 
 new Vue({
     el: '#app',

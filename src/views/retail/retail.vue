@@ -43,7 +43,8 @@
         </Row>
         <Row>
             <Col span="8">
-                 <Upload :action="actionUrl" name="file">
+            <input type="hidden" v-model="filePath">
+                 <Upload :action="actionUrl" name="file" :on-success="onSuccess">
                     <Button type="ghost" icon="ios-cloud-upload-outline">Upload files</Button>
                 </Upload>
             </Col>
@@ -61,6 +62,7 @@
     export default {
         data () {
             return {
+              filePath:'',
                 formValidate: {
                     retailOwner: '',
                     retailArea: '',
@@ -128,6 +130,9 @@
             }
         },
         methods: {
+          onSuccess(response){
+            this.filePath = response;
+          },
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
@@ -141,7 +146,7 @@
                         params.append("private_address", this.formValidate.retailAddress);
                         params.append("private_soil_name", this.formValidate.retailType);
                         // params.append("private_soil_contract", this.formValidate.thisRetailContract);
-
+                        params.append('private_soil_contract', this.filePath);
                         params.append("private_dept_id", sessionStorage.getItem("dept_id"));
 
                    // private_dept_id、private_owner、private_soil_area、private_ID_num、private_tel_num、private_address、private_soil_name、private_soil_contract（文件）

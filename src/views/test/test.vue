@@ -60,7 +60,8 @@
         </Row>
         <Row>
             <Col span="8">
-                <Upload :action="actionUrl" name="file">
+            <input type="hidden" v-model="filePath">
+                <Upload :action="actionUrl" name="file" :on-success="onSuccess">
                     <Button type="ghost" icon="ios-cloud-upload-outline">Upload files</Button>
                 </Upload>
             </Col>
@@ -78,6 +79,7 @@
     export default {
         data () {
             return {
+                filePath:'',
                 formValidate: {
                     coopName: '',
                     coopArea: '',
@@ -202,6 +204,9 @@
                 });
         },
         methods: {
+          onSuccess(response){
+            this.filePath = response;
+          },
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
@@ -215,6 +220,8 @@
                         params.append("soil_tel_num", this.formValidate.coopOwnre);
                         params.append("soil_address", this.formValidate.coopOAddress);
                         params.append("soil_name", this.formValidate.coopType);
+                        params.append("soil_name", this.formValidate.coopType);
+                        params.append('soil_contract', this.filePath);
                         params.append("dept_id", sessionStorage.getItem("dept_id"));
                         axios
                             .post(global.API_PATH+"coop/coop_msg_insert",params)
